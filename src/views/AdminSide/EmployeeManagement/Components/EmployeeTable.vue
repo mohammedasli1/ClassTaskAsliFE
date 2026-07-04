@@ -9,22 +9,24 @@
         <!-- Search by Phone -->
         <div class="search-wrapper">
           <Icon icon="bx:phone" class="search-icon" />
-          <input
+          <v-text-field
             id="search-phone"
             v-model="searchPhone"
-            type="text"
             placeholder="Search by phone…"
-            @input="onSearch"
+            variant="outlined"
+            density="compact"
+            hide-details
+            clearable
+            class="search-vfield"
+            @update:model-value="onSearch"
+            @click:clear="clearSearch"
           />
-          <button v-if="searchPhone" class="clear-search" @click="clearSearch">
-            <Icon icon="bx:x" />
-          </button>
         </div>
 
-        <button class="btn-primary" @click="addEmployee">
+        <v-btn class="btn-primary" @click="addEmployee">
           <Icon icon="bx:plus" width="20" height="20" />
           Add Employee
-        </button>
+        </v-btn>
       </div>
 
       <!-- Loading / empty states -->
@@ -63,12 +65,24 @@
               <td>{{ formatPKR(emp.yearly_net_salary) }}</td>
               <td>
                 <div class="actions">
-                  <button class="btn-icon edit" @click="editEmployee(emp.id)" title="Edit">
+                  <v-btn
+                    class="btn-icon edit"
+                    size="small"
+                    icon
+                    @click="editEmployee(emp.id)"
+                    title="Edit"
+                  >
                     <Icon icon="bx:edit-alt" width="17" height="17" />
-                  </button>
-                  <button class="btn-icon delete" @click="confirmDelete(emp.id)" title="Delete">
+                  </v-btn>
+                  <v-btn
+                    class="btn-icon delete"
+                    size="small"
+                    icon
+                    @click="confirmDelete(emp.id)"
+                    title="Delete"
+                  >
                     <Icon icon="bx:trash" width="17" height="17" />
-                  </button>
+                  </v-btn>
                 </div>
               </td>
             </tr>
@@ -174,64 +188,67 @@ const confirmDelete = async (id) => {
       position: relative;
       flex: 1;
       max-width: 280px;
+      display: flex;
+      align-items: center;
 
       .search-icon {
         position: absolute;
         left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
         color: #94a3b8;
         font-size: 18px;
+        z-index: 2;
+        pointer-events: none;
       }
 
-      input {
+      .search-vfield {
         width: 100%;
-        padding: 9px 36px 9px 34px;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        font-size: 13px;
-        font-family: 'Inter', sans-serif;
-        color: #334155;
 
-        &:focus {
-          outline: none;
-          border-color: #6d28d9;
-          box-shadow: 0 0 0 3px rgba(109,40,217,0.1);
+        :deep(.v-field) {
+          border-radius: 8px !important;
+          font-family: 'Inter', sans-serif;
+
+          .v-field__input {
+            padding-left: 34px !important;
+            font-size: 13px !important;
+            color: #334155 !important;
+            min-height: 0 !important;
+          }
+
+          .v-field__outline__start,
+          .v-field__outline__notch,
+          .v-field__outline__end {
+            border-color: #e2e8f0 !important;
+          }
+
+          &.v-field--focused {
+            .v-field__outline__start,
+            .v-field__outline__notch,
+            .v-field__outline__end {
+              border-color: #6d28d9 !important;
+              border-width: 2px !important;
+            }
+            box-shadow: 0 0 0 3px rgba(109,40,217,0.1);
+          }
         }
-        &::placeholder { color: #94a3b8; }
-      }
 
-      .clear-search {
-        position: absolute;
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        cursor: pointer;
-        color: #94a3b8;
-        font-size: 18px;
-        display: flex;
-        align-items: center;
-        &:hover { color: #ef4444; }
+        :deep(input::placeholder) { color: #94a3b8 !important; font-size: 13px; }
       }
     }
 
     .btn-primary {
-      background: #6d28d9;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 16px;
-      font-weight: 500;
-      font-family: 'Inter', sans-serif;
+      background: #6d28d9 !important;
+      color: white !important;
+      border-radius: 6px !important;
+      font-weight: 500 !important;
+      font-family: 'Inter', sans-serif !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      white-space: nowrap;
       display: flex;
       align-items: center;
       gap: 6px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.2s;
-      &:hover { background: #5b21b6; }
+      padding: 10px 16px !important;
+      &:hover { background: #5b21b6 !important; }
     }
   }
 }
@@ -281,19 +298,19 @@ const confirmDelete = async (id) => {
       gap: 8px;
 
       .btn-icon {
-        width: 30px;
-        height: 30px;
-        border-radius: 6px;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: white;
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 6px !important;
+        border: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: white !important;
         transition: opacity 0.2s;
+        min-width: 0 !important;
         &:hover { opacity: 0.8; }
-        &.edit   { background: #6d28d9; }
-        &.delete { background: #ef4444; }
+        &.edit   { background: #6d28d9 !important; }
+        &.delete { background: #ef4444 !important; }
       }
     }
   }

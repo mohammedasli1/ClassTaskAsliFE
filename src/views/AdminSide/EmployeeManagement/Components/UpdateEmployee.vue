@@ -17,7 +17,14 @@
             <label>Full Name</label>
             <div class="input-wrapper">
               <span class="input-icon purple"><Icon icon="bx:user" /></span>
-              <input type="text" :value="form.name" readonly class="readonly-input" />
+              <v-text-field
+                :model-value="form.name"
+                readonly
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="custom-vfield readonly-vfield"
+              />
             </div>
           </div>
 
@@ -26,7 +33,15 @@
             <label>Email</label>
             <div class="input-wrapper">
               <span class="input-icon purple"><Icon icon="bx:envelope" /></span>
-              <input type="email" :value="form.email" readonly class="readonly-input" />
+              <v-text-field
+                type="email"
+                :model-value="form.email"
+                readonly
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="custom-vfield readonly-vfield"
+              />
             </div>
           </div>
 
@@ -35,8 +50,16 @@
             <label>Phone Number <span class="required">*</span></label>
             <div class="input-wrapper">
               <span class="input-icon purple"><Icon icon="bx:phone" /></span>
-              <input id="edit-phone" type="text" v-model="form.phone"
-                     placeholder="Enter phone number" required />
+              <v-text-field
+                id="edit-phone"
+                v-model="form.phone"
+                placeholder="Enter phone number"
+                :required="true"
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="custom-vfield"
+              />
             </div>
           </div>
 
@@ -45,7 +68,14 @@
             <label>Designation</label>
             <div class="input-wrapper">
               <span class="input-icon purple"><Icon icon="bx:briefcase" /></span>
-              <input type="text" :value="form.designation" readonly class="readonly-input" />
+              <v-text-field
+                :model-value="form.designation"
+                readonly
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="custom-vfield readonly-vfield"
+              />
             </div>
           </div>
 
@@ -54,8 +84,18 @@
             <label>Monthly Salary Package <span class="required">*</span></label>
             <div class="input-wrapper">
               <span class="input-icon green"><Icon icon="bx:dollar" /></span>
-              <input id="edit-salary" type="number" v-model.number="form.salary"
-                     placeholder="Enter monthly salary" required min="0" />
+              <v-text-field
+                id="edit-salary"
+                type="number"
+                v-model.number="form.salary"
+                placeholder="Enter monthly salary"
+                :required="true"
+                min="0"
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="custom-vfield"
+              />
             </div>
           </div>
 
@@ -64,7 +104,15 @@
             <label>Monthly Tax Value</label>
             <div class="input-wrapper">
               <span class="input-icon red"><Icon icon="bx:pie-chart-alt" /></span>
-              <input type="number" :value="monthlyTax" readonly class="readonly-input" />
+              <v-text-field
+                type="number"
+                :model-value="monthlyTax"
+                readonly
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="custom-vfield readonly-vfield"
+              />
             </div>
           </div>
 
@@ -73,7 +121,15 @@
             <label>Yearly Increasing Bonus</label>
             <div class="input-wrapper">
               <span class="input-icon yellow"><Icon icon="bx:gift" /></span>
-              <input type="number" :value="yearlyBonus" readonly class="readonly-input" />
+              <v-text-field
+                type="number"
+                :model-value="yearlyBonus"
+                readonly
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="custom-vfield readonly-vfield"
+              />
             </div>
           </div>
 
@@ -82,7 +138,15 @@
             <label>Monthly Net Salary</label>
             <div class="input-wrapper">
               <span class="input-icon blue"><Icon icon="bx:wallet" /></span>
-              <input type="number" :value="monthlyNetSalary" readonly class="readonly-input" />
+              <v-text-field
+                type="number"
+                :model-value="monthlyNetSalary"
+                readonly
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="custom-vfield readonly-vfield"
+              />
             </div>
           </div>
 
@@ -91,29 +155,58 @@
             <label>Yearly Net Salary</label>
             <div class="input-wrapper">
               <span class="input-icon blue"><Icon icon="bx:calendar-check" /></span>
-              <input type="number" :value="yearlyNetSalary" readonly class="readonly-input" />
+              <v-text-field
+                type="number"
+                :model-value="yearlyNetSalary"
+                readonly
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="custom-vfield readonly-vfield"
+              />
             </div>
           </div>
 
         </div>
 
         <!-- Error banner -->
-        <div v-if="errorMsg" class="error-banner">{{ errorMsg }}</div>
+        <v-alert
+          v-if="errorMsg"
+          type="error"
+          variant="tonal"
+          class="error-banner"
+          :text="errorMsg"
+        />
 
         <div class="form-actions space-between">
           <div class="left-actions">
-            <button type="submit" class="btn-primary" :disabled="saving">
+            <v-btn
+              type="submit"
+              class="btn-primary"
+              :disabled="saving"
+              :loading="saving"
+            >
               <Icon icon="bx:save" class="btn-icon" />
               {{ saving ? 'Updating…' : 'Update Employee' }}
-            </button>
-            <button type="button" class="btn-outline" @click="loadEmployee">
+            </v-btn>
+            <v-btn
+              type="button"
+              class="btn-outline"
+              variant="outlined"
+              @click="loadEmployee"
+            >
               <Icon icon="bx:reset" class="btn-icon" /> Reset
-            </button>
+            </v-btn>
           </div>
           <div class="right-actions">
-            <button type="button" class="btn-danger" @click="deleteEmployee" :disabled="saving">
+            <v-btn
+              type="button"
+              class="btn-danger"
+              :disabled="saving"
+              @click="deleteEmployee"
+            >
               <Icon icon="bx:trash" class="btn-icon" /> Delete Employee
-            </button>
+            </v-btn>
           </div>
         </div>
       </form>
@@ -313,6 +406,7 @@ const deleteEmployee = async () => {
       width: 24px;
       height: 24px;
       border-radius: 4px;
+      z-index: 2;
 
       &.purple { color: #6d28d9; }
       &.green  { color: #16a34a; background: #dcfce7; font-size: 16px; border-radius: 50%; }
@@ -321,42 +415,59 @@ const deleteEmployee = async () => {
       &.blue   { color: #2563eb; background: #dbeafe; font-size: 16px; border-radius: 4px; }
     }
 
-    input {
+    .custom-vfield {
       width: 100%;
-      padding: 12px 16px 12px 48px;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 14px;
-      color: #334155;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.2s;
-      background: white;
 
-      &:focus {
-        outline: none;
-        border-color: #6d28d9;
-        box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.1);
+      :deep(.v-field) {
+        border-radius: 8px !important;
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+
+        .v-field__input {
+          padding-left: 48px !important;
+          color: #334155 !important;
+          font-size: 14px !important;
+          min-height: 0 !important;
+        }
+
+        .v-field__outline__start,
+        .v-field__outline__notch,
+        .v-field__outline__end {
+          border-color: #e2e8f0 !important;
+        }
+
+        &:hover .v-field__outline__start,
+        &:hover .v-field__outline__notch,
+        &:hover .v-field__outline__end {
+          border-color: #6d28d9 !important;
+        }
+
+        &.v-field--focused {
+          .v-field__outline__start,
+          .v-field__outline__notch,
+          .v-field__outline__end {
+            border-color: #6d28d9 !important;
+            border-width: 2px !important;
+          }
+          box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.1);
+        }
       }
 
-      &::placeholder { color: #94a3b8; }
+      :deep(input::placeholder) { color: #94a3b8 !important; }
+    }
 
-      &.readonly-input {
-        background: #f8fafc;
-        cursor: not-allowed;
-        color: #475569;
+    .readonly-vfield {
+      :deep(.v-field) {
+        background: #f8fafc !important;
+        .v-field__input { color: #475569 !important; cursor: not-allowed; }
       }
     }
   }
 }
 
 .error-banner {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #dc2626;
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 14px;
   margin-bottom: 20px;
+  border-radius: 8px !important;
 }
 
 .form-actions {
@@ -365,45 +476,122 @@ const deleteEmployee = async () => {
 
   .left-actions { display: flex; gap: 16px; }
 
-  button {
+  .btn-primary {
+    background: #6d28d9 !important;
+    color: white !important;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 12px 24px;
-    border-radius: 8px;
-    cursor: pointer;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.2s;
     .btn-icon { font-size: 20px; }
-    &:disabled { opacity: 0.6; cursor: not-allowed; }
-  }
-
-  .btn-primary {
-    background: #6d28d9;
-    color: white;
-    border: none;
-    &:hover:not(:disabled) { background: #5b21b6; }
+    &:hover { background: #5b21b6 !important; }
   }
 
   .btn-outline {
-    background: white;
-    color: #6d28d9;
-    border: 1px solid #6d28d9;
-    &:hover { background: #f3e8ff; }
+    color: #6d28d9 !important;
+    border-color: #6d28d9 !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .btn-icon { font-size: 20px; }
+    &:hover { background: #f3e8ff !important; }
   }
 
   .btn-danger {
-    background: #ef4444;
-    color: white;
-    border: none;
-    &:hover:not(:disabled) { background: #dc2626; }
+    background: #ef4444 !important;
+    color: white !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .btn-icon { font-size: 20px; }
+    &:hover { background: #dc2626 !important; }
   }
 }
 
+/* ── Tablet (≤1024px) ─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .add-employee-container {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+
+  .form-card {
+    padding: 24px;
+  }
+
+  .form-grid {
+    gap: 16px;
+  }
+}
+
+/* ── Small Tablet / Large Mobile (≤768px) ──────────────────── */
 @media (max-width: 768px) {
-  .form-grid { grid-template-columns: 1fr; }
-  .form-actions { flex-direction: column; gap: 16px; }
+  .form-card {
+    padding: 20px 16px;
+    border-radius: 10px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 12px;
+
+    .left-actions {
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-primary,
+    .btn-outline,
+    .btn-danger {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+/* ── Mobile (≤480px) ───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .form-card {
+    padding: 16px 12px;
+
+    .form-header {
+      gap: 8px;
+      margin-bottom: 20px;
+
+      h2 { font-size: 17px; }
+      .header-icon { font-size: 18px; padding: 4px; }
+    }
+  }
+
+  .form-group {
+    label { font-size: 13px; }
+  }
 }
 </style>
